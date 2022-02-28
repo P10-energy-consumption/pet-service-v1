@@ -27,8 +27,8 @@ namespace pet_service_v1.Repositories
 
                 try
                 {
-                    var result = _connection.QuerySingleAsync<int>(sql, pet);
-                    return await result;
+                    var result = await _connection.ExecuteScalarAsync<int>(sql, pet);
+                    return result;
                 }
                 catch (Exception)
                 {
@@ -53,8 +53,8 @@ namespace pet_service_v1.Repositories
 
                 try
                 {
-                    var result = _connection.QuerySingleAsync<int>(sql, new { id = photoId, petId, metaData, url });
-                    return await result;
+                    var result = await _connection.ExecuteAsync(sql, new { id = photoId, petId, metaData, url });
+                    return result;
                 }
                 catch (Exception)
                 {
@@ -82,8 +82,8 @@ namespace pet_service_v1.Repositories
 
                 try
                 {
-                    var result = _connection.QuerySingleAsync<int>(sql, new { id = petId });
-                    return await result;
+                    var result = await _connection.ExecuteAsync(sql, new { id = petId });
+                    return result;
                 }
                 catch (Exception)
                 {
@@ -97,14 +97,17 @@ namespace pet_service_v1.Repositories
             }
         }
 
-        public async Task<int> UpdatePet(int petId, string name, PetStatus status)
+        public async Task<int> UpdatePet(Pet pet)
         {
-            var sql = @"update pets.pet set
-                        Name = @Name,
-                        Status = @Status,
-                        Modified = current_timestamp,
-                        ModifiedBy = 'PetStore.Pet.Api'
-                        where Id = @Id";
+            var sql = @" /* PetStore.Pet.Api */
+update pets.pet set
+Name = @Name,
+Status = @Status,
+Tags = @Tags,
+Category = @Category,
+Modified = current_timestamp,
+ModifiedBy = 'PetStore.Pet.Api'
+where Id = @Id";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
@@ -112,8 +115,8 @@ namespace pet_service_v1.Repositories
 
                 try
                 {
-                    var result = _connection.QuerySingleAsync<int>(sql, new { name, status, id = petId });
-                    return await result;
+                    var result = await _connection.ExecuteAsync(sql, pet);
+                    return result;
                 }
                 catch (Exception)
                 {
@@ -140,8 +143,8 @@ namespace pet_service_v1.Repositories
 
                 try
                 {
-                    var result = _connection.QuerySingleAsync<Pet>(sql, new {id = petId });
-                    return await result;
+                    var result = await _connection.QueryAsync<Pet>(sql, new { id = petId });
+                    return result.FirstOrDefault();
                 }
                 catch (Exception)
                 {

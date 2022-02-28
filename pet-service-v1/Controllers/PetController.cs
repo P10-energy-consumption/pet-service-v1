@@ -21,10 +21,10 @@ namespace pet_service_v1.Controllers
             return Ok(result);
         }
 
-        [HttpPost("/v1/pet/{petId}")]
-        public async Task<IActionResult> UpdatePet(int petId, [FromForm] string name, [FromForm] PetStatus status)
+        [HttpPut("/v1/pet")]
+        public async Task<IActionResult> UpdatePet([FromBody] Pet pet)
         {
-            var result = await _petRepository.UpdatePet(petId, name, status);
+            var result = await _petRepository.UpdatePet(pet);
             return Ok(result);
         }
 

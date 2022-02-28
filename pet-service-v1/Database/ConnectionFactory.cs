@@ -1,4 +1,5 @@
-﻿using pet_service_v1.Database.Interfaces;
+﻿using Npgsql;
+using pet_service_v1.Database.Interfaces;
 using System.Data.SqlClient;
 
 namespace pet_service_v1.Database
@@ -14,9 +15,9 @@ namespace pet_service_v1.Database
             _connectionString = new Lazy<string>(() => _configuration.GetValue<string>("postgres"));
         }
 
-        public SqlConnection CreateDBConnection()
+        public NpgsqlConnection CreateDBConnection()
         {
-            return new SqlConnection(_connectionString.Value);
+            return new NpgsqlConnection(_connectionString.Value);
         }
     }
 }
