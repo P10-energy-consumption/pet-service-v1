@@ -51,7 +51,7 @@ namespace pet_service_v1.Controllers
         }
 
         [HttpGet("/v1/pet/{petId}")]
-        public async Task<IActionResult> GetPet([FromQuery] int petId)
+        public async Task<IActionResult> GetPet(int petId)
         {
             var result = await _petRepository.GetPet(petId);
             return Ok(result);
