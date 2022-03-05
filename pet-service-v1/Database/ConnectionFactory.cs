@@ -8,19 +8,19 @@ namespace pet_service_v1.Database
     {
         private readonly IConfiguration _configuration;
         private readonly Lazy<string> _connectionString;
-        private NpgsqlConnection _connection = null;
+        private SqlConnection _connection = null;
 
         public ConnectionFactory(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = new Lazy<string>(() => _configuration.GetValue<string>("postgres"));
+            _connectionString = new Lazy<string>(() => _configuration.GetValue<string>("mssql"));
         }
 
-        public NpgsqlConnection CreateDBConnection()
+        public SqlConnection CreateDBConnection()
         {
             if(_connection == null)
             {
-                return new NpgsqlConnection(_connectionString.Value);
+                return new SqlConnection(_connectionString.Value);
             }
             return _connection;
         }
