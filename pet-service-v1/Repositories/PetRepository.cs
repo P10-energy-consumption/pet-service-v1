@@ -77,10 +77,7 @@ namespace pet_service_v1.Repositories
         public async Task<int> DeletePet(int petId)
         {
             var result = -1;
-            var sql =     @"update pets set
-                            Deleted = current_timestamp,
-                            DeletedBy = 'PetStore.Pet.Api',
-                            IsDelete = true
+            var sql =     @"delete from pets
                             where Id = @Id";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
@@ -175,7 +172,7 @@ where Id = @Id";
             var result = new List<Pet>();
             var sql = @"select p.id, p.Name, p.Category, p.Status, p.Tags 
                         from pets p
-                        where p.IsDelete = false
+                        where p.IsDelete = 0
                         and p.status = @status";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
