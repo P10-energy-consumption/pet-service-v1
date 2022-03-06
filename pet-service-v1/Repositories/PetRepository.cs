@@ -48,7 +48,8 @@ namespace pet_service_v1.Repositories
         public async Task<int> InsertPetPhoto(Guid photoId, int petId, string metaData, string url)
         {
             var result = -1;
-            var sql = @"insert into pets (id, petid, url, metadata, created, createdby)
+            var sql = @"insert into photos (id, petid, url, metadata, created, createdby)
+                        OUTPUT Inserted.ID
                         values (@id, @petid, @url, @metaData, current_timestamp, 'PetStore.Pet.Api')";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
