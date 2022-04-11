@@ -3,21 +3,22 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT=Development
-EXPOSE 80
+ENV ASPNETCORE_URLS=http://*:8081
+EXPOSE 81
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["monolithic-service/monolithic-service.csproj", "monolithic-service/"]
-RUN dotnet restore "monolithic-service/monolithic-service.csproj"
+COPY ["pet-service-v1/pet-service-v1.csproj", "pet-service-v1/"]
+RUN dotnet restore "pet-service-v1/pet-service-v1.csproj"
 COPY . .
-WORKDIR "/src/monolithic-service"
-RUN dotnet build "monolithic-service.csproj" -c Release -o /app/build
+WORKDIR "/src/pet-service-v1"
+RUN dotnet build "pet-service-v1.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "monolithic-service.csproj" -c Release -o /app/publish
+RUN dotnet publish "pet-service-v1.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "monolithic-service.dll"]
+ENTRYPOINT ["dotnet", "pet-service-v1.dll"]
