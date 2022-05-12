@@ -24,7 +24,7 @@ values (@id, @name, @category, @status, @tags, current_timestamp, 'PetStore.Pet.
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
-                _connection.Open();
+                await _connection.OpenAsync();
 
                 try
                 {
@@ -37,7 +37,8 @@ values (@id, @name, @category, @status, @tags, current_timestamp, 'PetStore.Pet.
                 }
                 finally
                 {
-                    _connection.Close();
+                    await _connection.CloseAsync();
+                    await _connection.DisposeAsync();  
                 }
 
                 return pet.ID;
@@ -53,7 +54,7 @@ values (@id, @petid, @url, @metaData, current_timestamp, 'PetStore.Pet.Api')";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
-                _connection.Open();
+                await _connection.OpenAsync();
 
                 try
                 {
@@ -66,7 +67,8 @@ values (@id, @petid, @url, @metaData, current_timestamp, 'PetStore.Pet.Api')";
                 }
                 finally
                 {
-                    _connection.Close();
+                    await _connection.CloseAsync();
+                    await _connection.DisposeAsync();
                 }
 
                 return result;
@@ -81,7 +83,7 @@ delete from pets.pet where id = @Id"; ;
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
-                _connection.Open();
+                await _connection.OpenAsync();
 
                 try
                 {
@@ -94,7 +96,8 @@ delete from pets.pet where id = @Id"; ;
                 }
                 finally
                 {
-                    _connection.Close();
+                    await _connection.CloseAsync();
+                    await _connection.DisposeAsync();
                 }
 
                 return result;
@@ -116,7 +119,7 @@ where Id = @Id";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
-                _connection.Open();
+                await _connection.OpenAsync(); 
 
                 try
                 {
@@ -129,7 +132,8 @@ where Id = @Id";
                 }
                 finally
                 {
-                    _connection.Close();
+                    await _connection.CloseAsync();
+                    await _connection.DisposeAsync();
                 }
 
                 return result;
@@ -146,7 +150,7 @@ where p.Id = @Id";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
-                _connection.Open();
+                await _connection.OpenAsync();
 
                 try
                 {
@@ -159,7 +163,8 @@ where p.Id = @Id";
                 }
                 finally
                 {
-                    _connection.Close();
+                    await _connection.CloseAsync();
+                    await _connection.DisposeAsync();
                 }
 
                 return result;
@@ -177,7 +182,7 @@ and p.status = @status";
 
             using (var _connection = _connectionFactory.CreateDBConnection())
             {
-                _connection.Open();
+                await _connection.OpenAsync();
 
                 try
                 {
@@ -190,7 +195,8 @@ and p.status = @status";
                 }
                 finally
                 {
-                    _connection.Close();
+                    await _connection.CloseAsync();
+                    await _connection.DisposeAsync();
                 }
 
                 return result;
