@@ -158,7 +158,6 @@ where p.Id = @Id";
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally
@@ -170,6 +169,7 @@ where p.Id = @Id";
                 return result;
             }
         }
+
 
         public async Task<List<Pet>> GetPetByStatus(PetStatus status)
         {
