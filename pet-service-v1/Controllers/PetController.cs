@@ -24,7 +24,8 @@ namespace pet_service_v1.Controllers
         [HttpPut("/v1/pet")]
         public async Task<IActionResult> UpdatePet([FromBody] Pet pet)
         {
-            var result = await _petRepository.UpdatePet(pet);
+            await _petRepository.UpdatePet(pet);
+            var result = await _petRepository.GetPet(pet.ID);
             return Ok(result);
         }
 
