@@ -8,7 +8,6 @@ namespace pet_service_v1.Database
     {
         private readonly IConfiguration _configuration;
         private readonly Lazy<string> _connectionString;
-        private NpgsqlConnection _connection = null;
 
         public ConnectionFactory(IConfiguration configuration)
         {
@@ -18,11 +17,7 @@ namespace pet_service_v1.Database
 
         public NpgsqlConnection CreateDBConnection()
         {
-            if(_connection == null)
-            {
-                return new NpgsqlConnection(_connectionString.Value);
-            }
-            return _connection;
+            return new NpgsqlConnection(_connectionString.Value);
         }
     }
 }
